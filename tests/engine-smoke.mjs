@@ -3,6 +3,7 @@ globalThis.setTimeout=()=>0;
 import {CH} from '../js/data/characters.js';
 import {S,mk,reactionOf} from '../js/engine/rules.js';
 import {act} from '../js/engine/effects.js';
+import {endTurn} from '../js/engine/battle.js';
 import {attack,escOpts} from '../js/engine/combat.js';
 
 function duel(a='naruto',b='sasuke') {
@@ -28,6 +29,17 @@ for (const key of ['sasuke','shisui','itachi'])
   assert(p.on.kunai);
   const tai=CH.naruto.T.find(t=>t.id==='taifis');
   assert.equal(tai.atk(p)+p.mx.atk+tai.kunaiBonus,p.mx.atk+5000);
+}
+{
+  const [p,o]=duel();
+  act(p,CH.naruto.T.find(t=>t.id==='kunai'),o);
+  S.G.order=[1,0];S.G.i=1;
+  endTurn();
+  assert.equal(S.G.round,3,'fim da rodada deve avançar o contador');
+  assert.equal(S.G.i,0,'turno deve voltar ao início da ordem');
+  assert.equal(S.G.P[S.G.order[S.G.i]],o,'o oponente/IA deve receber o próximo turno');
+  assert.equal(o.turns,3,'o contador de turno da IA deve avançar');
+  assert.equal(p.on.kunai,99,'Kunai empunhada deve permanecer até ser arremessada ou a luta acabar');
 }
 {
   const [p,o]=duel();
