@@ -34,3 +34,20 @@ Para adicionar um personagem: crie `js/characters/novo.js` e inclua-o na lista d
 - Punho Adamantino e Selo Amaldiçoado não podem ser desativados pelo jogador; só caem por falta de recursos.
 - Punho Adamantino não tem o cooldown de 2 turnos ao desativar.
 - A versão publicada antes como artifact é mais antiga e não tem Itachi, Kai nem Previsão de Movimento.
+
+
+## Regras adicionadas nesta cópia de trabalho
+- Técnicas comuns do protótipo: empunhar Kunai (100 AG), Taijutsu físico (ATK físico, 1.000 AG), arremesso de Kunai (5.000 de dano direto no HP, 100 AG) e criação de clones das sombras (500 CK por clone).
+- Kunai arremessada deixa de estar empunhada. O bloqueio reativo contra armamentos à distância é oferecido quando o defensor tem Kunai empunhada (500 AG).
+- Kawarimi pode evitar ataques à distância, custa 500 CK e tem limite de cinco usos por combate. A Flor de Fênix usa Evasiva, pois é de curto alcance.
+- Clones das sombras absorvem um ataque cada e também interceptam Genjutsu. O Genjutsu compartilhado de Shisui está disponível a Shisui, Sasuke e Itachi.
+- A interface mostra níveis de velocidade/reação e o gasto contínuo de CK/HP/AG por rodada dos modos ativos e do Susanoo.
+- Susanoo e modos elegíveis do Naruto podem ser escolhidos como reação quando sua defesa ou HP adicional evita o resultado fatal.
+
+Para executar os testes rápidos com Node.js: `node --experimental-default-type=module tests/engine-smoke.mjs`.
+
+## Pendências para fechar as regras
+- Velocidade de cada técnica não informada na ficha usa nível 1 por padrão; as fichas devem receber `speed` quando esse valor for conhecido. Técnicas de defesa instantânea podem usar `instant: true`, mas nenhuma foi marcada automaticamente.
+- O limite máximo de clones por personagem varia, mas a ficha atual não informa os limites individuais; o custo de 500 CK impede criar clones sem recursos, ainda sem aplicar os limites por personagem.
+- A regra completa de alvos múltiplos (aliados, invocações, clones como participantes e distribuição de ataques) exige o futuro motor de equipes; esta versão 1v1 aplica os clones apenas como interceptadores.
+- O efeito do Genjutsu foi implementado por duas rodadas; Doujutsu ativo previne a captura. A cobertura de visão, distância entre combatentes e técnicas que cegam ainda dependem de atributos/sistemas não existentes no protótipo.

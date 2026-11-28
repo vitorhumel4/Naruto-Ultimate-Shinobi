@@ -1,6 +1,6 @@
 // Técnicas compartilhadas entre personagens
 import {SUS} from './modes.js';
-export const A=(id,n,rk,o)=>({id,n,rk,t:'atk',tg:1,esc:['ev'],...o});
+export const A=(id,n,rk,o={})=>({id,n,rk,t:'atk',tg:1,speed:1,esc:['ev'],...o});
 export const needShar=f=>f.on.shar?0:'Requer Sharingan';
 export const SHAR={id:'shar',n:'Sharingan',rk:'S/R',t:'flag',ck:2000};
 export const MANG={id:'mang',n:'Mangekyou Sharingan',rk:'S/R',t:'flag',ck:3000,mg:1,req:f=>f.on.shar?0:'Requer Sharingan'};
@@ -8,7 +8,13 @@ export const SUST=[1,2,3,4,5].map(s=>({id:'sus'+s,n:'Susanoo: '+SUS[s].n,rk:s<3?
 export const SUSATK=A('susatk','Susanoo: Golpe','S',{ag:5000,esc:['ev','cint'],atk:f=>SUS[f.sus].a,req:f=>f.sus?0:'Requer Susanoo'});
 export const GBF=A('gbf','Grande Bola de Fogo','A',{atk:5e4,ck:3000,tg:15,esc:['cint']});
 export const DRG=A('drg','Dragão de Fogo','A',{atk:1e5,ck:5000,tg:15,esc:['cint']});
-export const FLOR=A('flor','Estilo Fogo: Flor de Fênix','C',{atk:5e4,ck:3000,tg:5,cd:1,esc:['kaw']});
+export const FLOR=A('flor','Estilo Fogo: Flor de Fênix','C',{atk:5e4,ck:3000,tg:5,cd:1,esc:['ev']});
 export const KAI={id:'kai',n:'Sharingan: Genjutsu no Kai',rk:'A',t:'flag',ck:2000,noai:1,req:f=>f.on.shar?0:'Requer Sharingan'};
 export const PREV={id:'prev',n:'Previsão de Movimento',rk:'A',t:'flag',noai:1,req:f=>f.on.shar?0:'Requer Sharingan'};
 export const ESM=A('esm','Susanoo: Esmagar','S',{ag:1e4,atk:f=>SUS[f.sus].a,req:f=>f.sus>=2?0:'Requer Susanoo Esqueleto'});
+export const KUNAI={id:'kunai',n:'Empunhar Kunai',rk:'S/R',t:'equip',ag:100,desc:'Equipamento ninja de lâmina; empunhe para usar no combate corpo a corpo. Kunais são ilimitadas, mas só uma fica na mão.'};
+export const TAIJUTSU=A('taifis','Taijutsu físico','S/R',{atk:()=>0,ag:1000,fis:1,needsKunai:true,kunaiBonus:5000,esc:['v1'],desc:'Ataque físico de curto alcance: usa o ATK do personagem. Com Kunai empunhada, recebe +5.000 de ATK.'});
+export const KUNAI_THROW=A('kunaiThrow','Arremesso de Kunai','C',{atk:5000,ag:100,weapon:true,ranged:true,directHp:true,needsKunai:true,esc:['ev','kaw'],tg:15,desc:'Arremessa a Kunai: ignora a DEF corporal e acerta o HP. Evasiva ou Kawarimi podem evitar; defesas externas ainda podem bloquear.'});
+export const SHADOW_CLONE={id:'shadowClone',n:'Clones das Sombras (+1)',rk:'S/R',t:'clone',ck:500,desc:'Cria um clone das sombras por ativação. Cada clone custa 500 CK e intercepta um ataque, inclusive Genjutsu.'};
+export const SHISUI_GEN=A('shisuiGen','Sharingan: Genjutsu (Shisui)','A',{ck:3000,atk:0,tg:15,esc:[],genjutsu:true,visual:true,maxTargets:2,requiresSameGroup:true,desc:'Genjutsu visual de longo alcance. Alvos pegos ficam vulneráveis a dano direto no HP por 2 rodadas. Clones podem interceptá-lo; Doujutsu ativo impede a captura.',req:needShar});
+export const KUNAI_COMMON=[KUNAI,TAIJUTSU,KUNAI_THROW,SHADOW_CLONE];
