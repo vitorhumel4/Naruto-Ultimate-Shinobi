@@ -10,10 +10,10 @@ export function act(f,t,o){if(t.grp&&f.on[t.id]){setMode(f,t.id,0);log(0,`${f.n}
  for(const k of['ck','ag','hp'])if(t[k])f.cur[k]-=cst(f,t,k);
  f.use[t.id]=(f.use[t.id]||0)+1;
  if(t.t=='equip'){f.on.kunai=99;log(0,`${f.n} empunha uma Kunai. Agilidade −${t.ag}.`)}
- else if(t.t=='clone'){f.cloneCount++;log(0,`${f.n} cria um Clone das Sombras. Clones em campo: ${f.cloneCount}. Chakra −${t.ck}.`)}
- else if(t.t=='sus'){f.sus=t.s;log(0,`${f.n} ativa ${t.n}.`)}
- else if(t.t=='mode'){setMode(f,t.id,1);log(0,`${f.n} ativa ${t.n}.`)}
- else if(t.t=='flag'){f.on[t.id]=t.turns||99;log(0,`${f.n} ativa ${t.n}.`)}
+ else if(t.t=='clone'){const count=t.count||1;f.cloneCount+=count;log(0,`${f.n} cria ${count} Clone${count>1?'s':''} das Sombras. Clones em campo: ${f.cloneCount}/${f.cloneLimit}. Chakra −${t.ck*count}.`)}
+ else if(t.t=='sus'){f.sus=t.s;log(0,`${f.n} ativa ${t.n}.${t.chatDesc||t.desc?' '+(t.chatDesc||t.desc):''}`)}
+ else if(t.t=='mode'){setMode(f,t.id,1);log(0,`${f.n} ativa ${t.n}.${t.chatDesc||t.desc?' '+(t.chatDesc||t.desc):''}`)}
+ else if(t.t=='flag'){f.on[t.id]=t.turns||99;log(0,`${f.n} ativa ${t.n}.${t.chatDesc||t.desc?' '+(t.chatDesc||t.desc):''}`)}
  else if(t.t=='koto'){f.on.koto=99;o.koto=1;o.kmark=1;f.kn=1;log(0,`${f.n} prende ${o.n} no Kotoamatsukami! ${o.n} não poderá atacar no próximo turno.`)}}
 export function upkeep(f){const l=[];for(const id in f.on){const u=MOD[id]?MOD[id].up:FLAG[id]&&FLAG[id].up;if(u)l.push([id,u,MOD[id]?MOD[id].n:FLAG[id].n])}
  if(f.sus)l.push(['sus',SUS[f.sus].up,'Susanoo']);
